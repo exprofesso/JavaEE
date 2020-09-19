@@ -39,6 +39,13 @@ public class Main  {
 
 
 
+      // для создания новой ветки используйте git branch имя
+      //git checkout
+      //
+      //и имя новой ветки
+
+      System.out.println("Вот для вас два новый рандома");
+
   }
 
 }
