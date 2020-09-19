@@ -31,6 +31,8 @@ public class Main  {
       //
       //и имя новой ветки
 
+      System.out.println("Вот для вас два новый рандома");
+
   }
 
 }
