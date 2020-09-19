@@ -8,9 +8,13 @@ public class Main  {
 
     //  Lesson28_Excel_ApachePOI.readExcel("/Users/sergeypodkolzin/Downloads/excel.xlsx");
 
-      // Lesson29_WritertoExcel.WritertoExcel("excel1");
+      // Lesson29_WritertoExcel.WritertoExcel("excel1");ª
 
       System.out.println("hi");
+
+      for(int i = 0; i < 5; i++){
+          System.out.println("hi Belarus");
+      }
 
 
   }
