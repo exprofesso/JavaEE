@@ -26,7 +26,7 @@ public class Main  {
       System.out.println("что же с этим всем делать???");
         // объединение произошло
       int a = 4;
-      while (a > 1){
+      while (a > -1){
           System.out.println("test loop");
           a--;
       }
