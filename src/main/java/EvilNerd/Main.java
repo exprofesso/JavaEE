@@ -12,6 +12,8 @@ public class Main  {
 
       System.out.println("hi");
 
+      System.out.println("Что то новое тут ");
+
 
   }
 
