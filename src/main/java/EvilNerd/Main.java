@@ -1,5 +1,7 @@
 package EvilNerd;
 
+import java.util.Random;
+
 public class Main  {
   public static void main(String[] args) {
 
@@ -38,6 +40,11 @@ public class Main  {
           System.out.println("test loop");
 
       }
+
+      Random random = new Random();
+      int x = random.nextInt(100);
+
+      System.out.println(x);
 
   }
 
