@@ -16,6 +16,8 @@ public class Main  {
           System.out.println("hi Belarus");
       }
 
+      System.out.println("HA_HA_HA");
+
 
   }
 
