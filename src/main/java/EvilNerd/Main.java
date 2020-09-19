@@ -1,5 +1,7 @@
 package EvilNerd;
 
+import java.util.Random;
+
 public class Main  {
   public static void main(String[] args) {
 
@@ -25,6 +27,24 @@ public class Main  {
 
       System.out.println("что же с этим всем делать???");
         // объединение произошло
+      int a = 4;
+      if (a > 1){
+          System.out.println("test loop");
+          a--;
+      }
+      if(a < 10){
+          System.out.println("new test loop");
+      }
+
+      for (int i = 0; i < 3; i++){
+          System.out.println("test loop");
+
+      }
+
+      Random random = new Random();
+      int x = random.nextInt(100);
+
+      System.out.println(x);
 
       // для создания новой ветки используйте git branch имя
       //git checkout
