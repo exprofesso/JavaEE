@@ -20,6 +20,8 @@ public class Main  {
 
       // что то опять пошло не так
 
+      System.out.println("опять не хочет работать");
+
 
   }
 
