@@ -18,6 +18,8 @@ public class Main  {
 
       System.out.println("HA_HA_HA");
 
+      // что то опять пошло не так
+
 
   }
 
