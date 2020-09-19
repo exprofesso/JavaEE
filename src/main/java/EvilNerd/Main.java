@@ -24,7 +24,7 @@ public class Main  {
       System.out.println("опять не хочет работать");
 
       System.out.println("что же с этим всем делать???");
-
+        // объединение произошло
 
   }
 
