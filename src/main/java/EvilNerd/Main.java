@@ -1,5 +1,7 @@
 package EvilNerd;
 
+import java.util.Random;
+
 public class Main  {
   public static void main(String[] args) {
 
@@ -26,10 +28,16 @@ public class Main  {
       System.out.println("что же с этим всем делать???");
         // объединение произошло
       int a = 4;
+
       while (a > -1){
+          Random random = new Random();
+          int i = random.nextInt(100);
+          System.out.println(i);
           System.out.println("test loop");
           a--;
       }
+
+
 
   }
 
