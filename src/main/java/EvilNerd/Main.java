@@ -15,12 +15,15 @@ public class Main  {
       for(int i = 0; i < 5; i++){
           System.out.println("hi Belarus");
       }
+      System.out.println("Что то новое тут ");
 
       System.out.println("HA_HA_HA");
 
       // что то опять пошло не так
 
       System.out.println("опять не хочет работать");
+
+      System.out.println("что же с этим всем делать???");
 
 
   }
