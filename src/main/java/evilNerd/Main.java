@@ -1,4 +1,4 @@
-package EvilNerd;
+package evilNerd;
 
 import java.util.Random;
 
