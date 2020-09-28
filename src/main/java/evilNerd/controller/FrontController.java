@@ -26,14 +26,14 @@ public class FrontController extends  HttpServlet{
     private void doRequest(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         // Третий вариант задание номер 6
-/*
+
         RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/jsp/main.jsp");
         dispatcher.forward(req, resp);
 
-*/
+
 
         // Второй вариат задание номер 5
-
+/*
         resp.setContentType("text/html");
         PrintWriter output = resp.getWriter();
         output.println("<html><head>");
@@ -43,7 +43,7 @@ public class FrontController extends  HttpServlet{
         output.println("<h1> Hello, world!!! </h1>");
         output.println("</body></html>");
 
-
+*/
 
 // Первоначальный вариант
 /*
