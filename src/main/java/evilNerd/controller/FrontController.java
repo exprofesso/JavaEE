@@ -1,5 +1,9 @@
 package evilNerd.controller;
 
+import evilNerd.domain.User;
+import evilNerd.repository.UserRepository;
+import evilNerd.repository.impl.UserRepositoryImpl;
+
 import java.io.IOException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,6 +14,8 @@ import java.io.PrintWriter;
 import java.util.stream.Collectors;
 
 public class FrontController extends  HttpServlet{
+    public static final UserRepository userRepository = new UserRepositoryImpl();
+
     public FrontController() {
         super();
     }

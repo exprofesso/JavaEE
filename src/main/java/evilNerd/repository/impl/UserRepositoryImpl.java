@@ -41,7 +41,7 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public List<User> findAll() {
-        return String findAllQuery = "select * from m_user order by id";
+        final String findAllQuery = "select * from m_user order by id";
         List<User> result = new ArrayList<>();
         Connection connection;
         Statement statement;
