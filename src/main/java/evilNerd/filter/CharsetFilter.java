@@ -1,8 +1,12 @@
 package evilNerd.filter;
 
-import javax.servlet.*;
+import javax.servlet.Filter;
+import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import java.io.IOException;
-import java.util.logging.Filter;
 
 public class CharsetFilter implements Filter {
 
@@ -35,4 +39,6 @@ public class CharsetFilter implements Filter {
         request.setCharacterEncoding("utf-8");
         response.setCharacterEncoding("utf-8");
         chain.doFilter(request, response);
+    }
 }
+
