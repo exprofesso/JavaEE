@@ -54,9 +54,20 @@
         <jsp-file>/WEB-INF/errors/500.jsp</jsp-file>
     </servlet>
     
+    <servlet>
+        <servlet-name>tablecars</servlet-name>
+        <jsp-file>/WEB-INF/jsp/tablecars.jsp</jsp-file>
+    </servlet>
+    
 
 
+    
+    
 
+    <servlet-mapping>
+        <servlet-name>tablecars</servlet-name>
+        <url-pattern>/tablecars</url-pattern>
+    </servlet-mapping>
 
 
     <servlet-mapping>

@@ -8,34 +8,29 @@ import java.util.Date;
 import java.util.Objects;
 
 public class User {
-
-
+    /*Here we will store PK of m_users table*/
     private Long id;
+
     private String name;
-    private String  surname;
+    private String surname;
     private Date birthDate;
-    private Gender gender = Gender.NOT_SELECTED;;
+    private Gender gender = Gender.NOT_SELECTED;
     private Timestamp created;
     private Timestamp changed;
+    private Float weight;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        User user = (User) o;
-        return Objects.equals(id, user.id) &&
-                Objects.equals(name, user.name) &&
-                Objects.equals(surname, user.surname) &&
-                Objects.equals(birthDate, user.birthDate) &&
-                gender == user.gender &&
-                Objects.equals(created, user.created) &&
-                Objects.equals(changed, user.changed) &&
-                Objects.equals(weight, user.weight);
+    public User() {
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, name, surname, birthDate, gender, created, changed, weight);
+    public User(Long id, String name, String surname, Date birthDate, Gender gender, Timestamp created, Timestamp changed, Float weight) {
+        this.id = id;
+        this.name = name;
+        this.surname = surname;
+        this.birthDate = birthDate;
+        this.gender = gender;
+        this.created = created;
+        this.changed = changed;
+        this.weight = weight;
     }
 
     public Long getId() {
@@ -62,11 +57,11 @@ public class User {
         this.surname = surname;
     }
 
-    public Date getbirthDate() {
+    public Date getBirthDate() {
         return birthDate;
     }
 
-    public void setbirthDate(Date birthDate) {
+    public void setBirthDate(Date birthDate) {
         this.birthDate = birthDate;
     }
 
@@ -102,21 +97,24 @@ public class User {
         this.weight = weight;
     }
 
-    private Float weight;
-
-    public User() {
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return Objects.equals(id, user.id) &&
+                Objects.equals(name, user.name) &&
+                Objects.equals(surname, user.surname) &&
+                Objects.equals(birthDate, user.birthDate) &&
+                gender == user.gender &&
+                Objects.equals(created, user.created) &&
+                Objects.equals(changed, user.changed) &&
+                Objects.equals(weight, user.weight);
     }
 
-
-    public User(Long id, String name, String surname, Date birth_date, Gender gender, Timestamp created, Timestamp changed, Float weight) {
-        this.id = id;
-        this.name = name;
-        this.surname = surname;
-        this.birthDate = birthDate;
-        this.gender = gender;
-        this.created = created;
-        this.changed = changed;
-        this.weight = weight;
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, surname, birthDate, gender, created, changed, weight);
     }
 
     @Override
