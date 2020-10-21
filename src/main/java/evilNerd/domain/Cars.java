@@ -1,10 +1,15 @@
 package evilNerd.domain;
 
-import lombok.*;
+import lombok.Setter;
+import lombok.Getter;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
+
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
-import java.util.Objects;
+
 
 
 @Setter
