@@ -61,7 +61,7 @@ public static final DatabasePropertiesReader reader = DatabasePropertiesReader.g
         try {
             connection = DriverManager.getConnection(reader.getProperty(DATABASE_URL), reader.getProperty(DATABASE_LOGIN), reader.getProperty(DATABASE_PASSWORD));
             statement = connection.prepareStatement(findByIdQuery);
-            PreparedStatement lastInsertId = connection.prepareStatement("SELECT currval('m_users_id_seq') as last_insert_id;");
+            PreparedStatement lastInsertId = connection.prepareStatement("select currval('m_users_id_seq') as last_insert_id;");
 
             statement.setString(1, user.getName());
             statement.setString(2, user.getSurname());

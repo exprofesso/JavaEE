@@ -3,13 +3,17 @@ package evilNerd.repository.impl;
 import evilNerd.domain.Cars;
 import evilNerd.repository.CarsRepository;
 import evilNerd.util.DatabasePropertiesReader;
-import org.apache.commons.lang3.StringUtils;
+import evilNerd.exception.EntityNotFoundException;
+
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -36,8 +40,43 @@ public class CarsRepositorylmpl implements CarsRepository {
         return null;
     }
     @Override
-    public Cars save(Cars object) {
-        return null;
+    public Cars save(Cars cars) {
+
+        final String findByIdQuery = "insert into m_cars (model, creation_year, user_id, price, color)" + "values (?,?,?,?,?)";
+
+        Connection connection;
+        PreparedStatement statement;
+
+        try {
+            Class.forName(reader.getProperty(DATABASE_DRIVER_NAME));
+        } catch (ClassNotFoundException r) {
+            System.err.println("JDBC Driver CARS Cannot be loaded!");
+            throw new RuntimeException("JDBC Driver CARS Cannot be loaded!");
+        }
+        try {
+            connection = DriverManager.getConnection(reader.getProperty(DATABASE_URL), reader.getProperty(DATABASE_LOGIN), reader.getProperty(DATABASE_PASSWORD));
+            statement = connection.prepareStatement(findByIdQuery);
+            PreparedStatement lastInsertId = connection.prepareStatement("select currval('m_cars_id_seq') as last_insert_id;");
+            statement.setString(1, cars.getModel());
+            statement.setInt(2, cars.getCreationYear());
+            statement.setLong(3, cars.getUserId());
+            statement.setFloat(4, cars.getPrice());
+            statement.setString(5, cars.getColor());
+
+            statement.executeUpdate();
+
+            Long insertedId;
+            ResultSet lasrIdResultSet = lastInsertId.executeQuery();
+            if (lasrIdResultSet.next()) {
+                insertedId = lasrIdResultSet.getLong("last_insert_id");
+            } else {
+                throw new RuntimeException("We cannot read sequence last value during User creation!");
+            }
+            return findById(insertedId);
+        } catch (SQLException r) {
+            System.err.println(r.getMessage());
+            throw new RuntimeException("SQL Issues!");
+        }
     }
 
     @Override
@@ -53,16 +92,12 @@ public class CarsRepositorylmpl implements CarsRepository {
             System.err.println("JDBC Driver CARS Cannot be loaded!");
             throw new RuntimeException("JDBC Driver CARS Cannot be loaded!");
         }
-
         try {
             connection = DriverManager.getConnection(reader.getProperty(DATABASE_URL), reader.getProperty(DATABASE_LOGIN), reader.getProperty(DATABASE_PASSWORD));
             statement = connection.createStatement();
             rs = statement.executeQuery(findAllQuery);
-
             while (rs.next()){
-
                 result.add(parseResultSet(rs));
-
             }
             return result;
         } catch (SQLException e){
@@ -87,22 +122,100 @@ public class CarsRepositorylmpl implements CarsRepository {
 
     @Override
     public Cars findById(Long key) {
-        return null;
+        final String findByIdQuery = "select * from m_cars where id = ?";
+
+        Connection connection;
+        PreparedStatement statement;
+        ResultSet rs;
+
+        try {
+            Class.forName(reader.getProperty(DATABASE_DRIVER_NAME));
+        } catch (ClassNotFoundException r){
+            System.err.println("JDBC Driver Cannot be loaded!");
+            throw new RuntimeException("JDBC Driver Cannot be loaded!");
+        }
+
+        try {
+            connection = DriverManager.getConnection(reader.getProperty(DATABASE_URL), reader.getProperty(DATABASE_LOGIN), reader.getProperty(DATABASE_PASSWORD));
+            statement = connection.prepareStatement(findByIdQuery);
+            statement.setLong(1, key);
+            rs = statement.executeQuery();
+            if(rs.next()){
+                return parseResultSet(rs);
+            } else {
+                throw new EntityNotFoundException("User with ID:" + key + "not found");
+            }
+        } catch (SQLException r){
+            System.err.println(r.getMessage());
+            throw new RuntimeException("SQL Issues!");
+        }
+
+
     }
 
     @Override
     public Optional<Cars> findOne(Long key) {
-        return Optional.empty();
+        return Optional.of(findById(key));
     }
 
     @Override
-    public Cars update(Cars object) {
-        return null;
+    public Cars update(Cars cars) {
+
+       final String findByIdQuery = "update m_cars " +
+       "set model = ?, creation_year = ?, user_id = ?, price = ?, color = ? where id = ?";
+
+       Connection connection;
+       PreparedStatement statement;
+            try {
+                Class.forName(reader.getProperty(DATABASE_DRIVER_NAME));
+            } catch (ClassNotFoundException e) {
+                System.err.println("JDBC Driver Cannot be loaded!");
+                throw new RuntimeException("JDBC Driver Cannot be loaded!");
+            }
+            try {
+
+                connection = DriverManager.getConnection(reader.getProperty(DATABASE_URL), reader.getProperty(DATABASE_LOGIN), reader.getProperty(DATABASE_PASSWORD));
+                statement = connection.prepareStatement(findByIdQuery);
+                statement.setString(1, cars.getModel());
+                statement.setInt(2, cars.getCreationYear());
+                statement.setLong(3, cars.getUserId());
+                statement.setFloat(4, cars.getPrice());
+                statement.setString(5, cars.getColor());
+                statement.executeUpdate();
+                return findById(cars.getId());
+
+            } catch (SQLException r) {
+                System.err.println(r.getMessage());
+                throw new RuntimeException("SQL Issues!");
+            }
+
     }
 
     @Override
-    public Long delete(Cars object) {
-        return null;
+    public Long delete(Cars cars) {
+        final String findByIdQuery = "delete from m_cars where id = ?";
+
+        Connection connection;
+        PreparedStatement statement;
+
+        try {
+            Class.forName(reader.getProperty(DATABASE_DRIVER_NAME));
+        } catch (ClassNotFoundException e) {
+            System.err.println("JDBC Driver Cannot be loaded!");
+            throw new RuntimeException("JDBC Driver Cannot be loaded!");
+        }
+        try {
+            connection = DriverManager.getConnection(reader.getProperty(DATABASE_URL), reader.getProperty(DATABASE_LOGIN), reader.getProperty(DATABASE_PASSWORD));
+            statement = connection.prepareStatement(findByIdQuery);
+            statement.setLong(1, cars.getId());
+            int deletedRows = statement.executeUpdate();
+            return (long)deletedRows;
+        } catch (SQLException r) {
+            System.err.println(r.getMessage());
+            throw new RuntimeException("SQL Issues!");
+        }
+
+
     }
 
 }
