@@ -2,6 +2,7 @@ package evilNerd.repository.impl;
 
 import evilNerd.domain.Cars;
 import evilNerd.repository.CarsRepository;
+import evilNerd.util.DatabasePropertiesReader;
 import org.apache.commons.lang3.StringUtils;
 
 import java.sql.Connection;
@@ -13,16 +14,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static evilNerd.util.DatabasePropertiesReader.DATABASE_DRIVER_NAME;
+import static evilNerd.util.DatabasePropertiesReader.DATABASE_LOGIN;
+import static evilNerd.util.DatabasePropertiesReader.DATABASE_PASSWORD;
+import static evilNerd.util.DatabasePropertiesReader.DATABASE_URL;
+
 public class CarsRepositorylmpl implements CarsRepository {
 
-    public static final String POSTRGES_DRIVER_NAME = "org.postgresql.Driver";
-    public static final String DATABASE_URL = "jdbc:postgresql://localhost:";
-    public static final int DATABASE_PORT = 5432;
-    public static final String DATABASE_NAME = "/webinar_database";
-    public static final String DATABASE_LOGIN = "test";
-    public static final String DATABASE_PASSWORD = "root";
-
-
+    public static final DatabasePropertiesReader reader = DatabasePropertiesReader.getInstance();
 
     public static final String ID = "id";
     public static final String MODEL = "model";
@@ -49,26 +48,20 @@ public class CarsRepositorylmpl implements CarsRepository {
         Statement statement;
         ResultSet rs;
         try {
-            Class.forName(POSTRGES_DRIVER_NAME);
+            Class.forName(reader.getProperty(DATABASE_DRIVER_NAME));
         } catch (ClassNotFoundException e){
             System.err.println("JDBC Driver CARS Cannot be loaded!");
             throw new RuntimeException("JDBC Driver CARS Cannot be loaded!");
         }
-        String jdbcUrl = StringUtils.join(DATABASE_URL, DATABASE_PORT, DATABASE_NAME);
+
         try {
-            connection = DriverManager.getConnection(jdbcUrl, DATABASE_LOGIN, DATABASE_PASSWORD);
+            connection = DriverManager.getConnection(reader.getProperty(DATABASE_URL), reader.getProperty(DATABASE_LOGIN), reader.getProperty(DATABASE_PASSWORD));
             statement = connection.createStatement();
             rs = statement.executeQuery(findAllQuery);
 
             while (rs.next()){
-                Cars cars = new Cars();
-               cars.setId(rs.getLong(ID));
-               cars.setModel(rs.getString(MODEL));
-               cars.setCreationYear(rs.getInt(CREATION_YEAR));
-               cars.setUserId(rs.getLong(USER_ID));
-               cars.setPrice(rs.getFloat(PRICE));
-               cars.setColor(rs.getString(COLOR));
-                result.add(cars);
+
+                result.add(parseResultSet(rs));
 
             }
             return result;
@@ -76,6 +69,19 @@ public class CarsRepositorylmpl implements CarsRepository {
             System.err.println(e.getMessage());
             throw new RuntimeException("SQL Issues");
         }
+
+    }
+
+    private Cars parseResultSet (ResultSet rs) throws SQLException {
+
+        Cars cars = new Cars();
+        cars.setId(rs.getLong(ID));
+        cars.setModel(rs.getString(MODEL));
+        cars.setCreationYear(rs.getInt(CREATION_YEAR));
+        cars.setUserId(rs.getLong(USER_ID));
+        cars.setPrice(rs.getFloat(PRICE));
+        cars.setColor(rs.getString(COLOR));
+        return cars;
 
     }
 
