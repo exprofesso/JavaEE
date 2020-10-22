@@ -1,9 +1,9 @@
 package evilNerd.controller;
 
 import evilNerd.controller.command.Commands;
-//import evilNerd.domain.Cars;
-//import evilNerd.repository.CarsRepository;
-//import evilNerd.repository.impl.CarsRepositorylmpl;
+import evilNerd.domain.Cars;
+import evilNerd.repository.CarsRepository;
+import evilNerd.repository.impl.CarsRepositorylmpl;
 import evilNerd.domain.User;
 import evilNerd.repository.UserRepository;
 import evilNerd.repository.impl.UserRepositoryImpl;
@@ -31,7 +31,8 @@ import org.apache.commons.io.IOUtils;
 
 public class FrontController extends HttpServlet {
 
-    public static final UserRepository userRepository = new UserRepositoryImpl();
+    //public static final UserRepository userRepository = new UserRepositoryImpl();
+    public static final CarsRepository carsRepository = new CarsRepositorylmpl();
     public FrontController() {
         super();
     }
@@ -53,10 +54,79 @@ public class FrontController extends HttpServlet {
 //            dispatcher.forward(req, resp);
 //        }
 //    }
+//    private void processGetRequests(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+//        Commands commandName = Commands.findByCommandName(req.getParameter("command"));
+//        try {
+//            RequestDispatcher dispatcher = req.getRequestDispatcher("/hello");
+//            if (dispatcher != null) {
+//                resolveGetRequestCommands(req, commandName);
+//                dispatcher.forward(req, resp);
+//            }
+//        } catch (Exception e) {
+//            RequestDispatcher dispatcher = req.getRequestDispatcher("/error");
+//            if (dispatcher != null) {
+//                req.setAttribute("trace", e.getMessage());
+//                dispatcher.forward(req, resp);
+//            }
+//        }
+//    }
+//    private void resolveGetRequestCommands(HttpServletRequest req, Commands commandName) {
+//        //http://localhost:8080/test/FrontController?command=findAll&page=0&limit=10 (add offset to query)
+//        switch (commandName) {
+//            //     http://localhost:8080/test/FrontController?command=findAll
+//            case FIND_ALL:
+//                String page = req.getParameter("page");
+//                String limit = req.getParameter("limit");
+//                req.setAttribute("users", userRepository.findAll());
+//                break;
+//            //     http://localhost:8080/test/FrontController?command=findById&id=10
+//            case FIND_BY_ID:
+//                String id = req.getParameter("id");
+//                long userId = Long.parseLong(id);
+//                req.setAttribute("users", Collections.singletonList(userRepository.findById(userId)));
+//                req.setAttribute("singleUser", userRepository.findById(userId));
+//                break;
+//            default:
+//                break;
+//        }
+//    }
+//    private void processPostRequests(HttpServletRequest req, HttpServletResponse resp) {
+//        Commands commandName = Commands.findByCommandName(req.getParameter("command"));
+//        try {
+//            switch (commandName) {
+//                case CREATE:
+//                    String body = IOUtils.toString(req.getInputStream(), Charset.defaultCharset());
+//                    User user = new Gson().fromJson(body, User.class);
+//                    req.setAttribute("users", Collections.singletonList(userRepository.save(user)));
+//                    break;
+//                case UPDATE:
+//                    String updateBody = IOUtils.toString(req.getInputStream(), Charset.defaultCharset());
+//                    User updateUser = new Gson().fromJson(updateBody, User.class);
+//                    req.setAttribute("users", Collections.singletonList(userRepository.update(updateUser)));
+//                    break;
+//                case DELETE:
+//                    String id = req.getParameter("id");
+//                    long userId = Long.parseLong(id);
+//                    userRepository.delete(userRepository.findById(userId));
+//                    req.setAttribute("users", userRepository.findAll());
+//                    break;
+//                default:
+//                    break;
+//            }
+//        } catch (Exception e) {
+//            throw new RuntimeException(e.getMessage());
+//        }
+
+
+
+
+
+
+
     private void processGetRequests(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Commands commandName = Commands.findByCommandName(req.getParameter("command"));
         try {
-            RequestDispatcher dispatcher = req.getRequestDispatcher("/hello");
+            RequestDispatcher dispatcher = req.getRequestDispatcher("/tablecars");
             if (dispatcher != null) {
                 resolveGetRequestCommands(req, commandName);
                 dispatcher.forward(req, resp);
@@ -76,14 +146,14 @@ public class FrontController extends HttpServlet {
             case FIND_ALL:
                 String page = req.getParameter("page");
                 String limit = req.getParameter("limit");
-                req.setAttribute("users", userRepository.findAll());
+                req.setAttribute("cars", carsRepository.findAll());
                 break;
             //     http://localhost:8080/test/FrontController?command=findById&id=10
             case FIND_BY_ID:
                 String id = req.getParameter("id");
-                long userId = Long.parseLong(id);
-                req.setAttribute("users", Collections.singletonList(userRepository.findById(userId)));
-                req.setAttribute("singleUser", userRepository.findById(userId));
+                long carsId = Long.parseLong(id);
+                req.setAttribute("cars", Collections.singletonList(carsRepository.findById(carsId)));
+                req.setAttribute("singleCars", carsRepository.findById(carsId));
                 break;
             default:
                 break;
@@ -95,19 +165,19 @@ public class FrontController extends HttpServlet {
             switch (commandName) {
                 case CREATE:
                     String body = IOUtils.toString(req.getInputStream(), Charset.defaultCharset());
-                    User user = new Gson().fromJson(body, User.class);
-                    req.setAttribute("users", Collections.singletonList(userRepository.save(user)));
+                    Cars cars = new Gson().fromJson(body, Cars.class);
+                    req.setAttribute("cars", Collections.singletonList(carsRepository.save(cars)));
                     break;
                 case UPDATE:
                     String updateBody = IOUtils.toString(req.getInputStream(), Charset.defaultCharset());
-                    User updateUser = new Gson().fromJson(updateBody, User.class);
-                    req.setAttribute("users", Collections.singletonList(userRepository.update(updateUser)));
+                    Cars updateCars = new Gson().fromJson(updateBody, Cars.class);
+                    req.setAttribute("cars", Collections.singletonList(carsRepository.update(updateCars)));
                     break;
                 case DELETE:
                     String id = req.getParameter("id");
-                    long userId = Long.parseLong(id);
-                    userRepository.delete(userRepository.findById(userId));
-                    req.setAttribute("users", userRepository.findAll());
+                    long carsId = Long.parseLong(id);
+                    carsRepository.delete(carsRepository.findById(carsId));
+                    req.setAttribute("cars", carsRepository.findAll());
                     break;
                 default:
                     break;
@@ -116,7 +186,17 @@ public class FrontController extends HttpServlet {
             throw new RuntimeException(e.getMessage());
         }
     }
+
+
+
 }
+
+
+
+
+
+
+
 
 
 
