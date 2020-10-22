@@ -6,6 +6,7 @@ import evilNerd.domain.User;
 import evilNerd.repository.UserRepository;
 import evilNerd.util.DatabasePropertiesReader;
 import evilNerd.exception.EntityNotFoundException;
+import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -24,10 +25,10 @@ import static evilNerd.util.DatabasePropertiesReader.DATABASE_LOGIN;
 import static evilNerd.util.DatabasePropertiesReader.DATABASE_PASSWORD;
 import static evilNerd.util.DatabasePropertiesReader.DATABASE_URL;
 
+@Repository
 public class UserRepositoryImpl implements UserRepository {
 
-public static final DatabasePropertiesReader reader = DatabasePropertiesReader.getInstance();
-
+    public static final DatabasePropertiesReader reader = DatabasePropertiesReader.getInstance();
     private static final String ID = "id";
     private static final String NAME = "name";
     private static final String SURNAME = "surname";
@@ -36,33 +37,26 @@ public static final DatabasePropertiesReader reader = DatabasePropertiesReader.g
     private static final String CREATED = "created";
     private static final String CHANGED = "changed";
     private static final String WEIGHT = "weight";
-
     @Override
     public List<User> search(String query) {
         return null;
     }
-
     @Override
     public User save(User user) {
-
         final String findByIdQuery = "insert into m_users (name, surname, birth_date, gender, created, changed, weight) " +
                 "values (?,?,?,?,?,?,?)";
-
         Connection connection;
         PreparedStatement statement;
-
         try {
             Class.forName(reader.getProperty(DATABASE_DRIVER_NAME));
         } catch (ClassNotFoundException e) {
             System.err.println("JDBC Driver Cannot be loaded!");
             throw new RuntimeException("JDBC Driver Cannot be loaded!");
         }
-
         try {
             connection = DriverManager.getConnection(reader.getProperty(DATABASE_URL), reader.getProperty(DATABASE_LOGIN), reader.getProperty(DATABASE_PASSWORD));
             statement = connection.prepareStatement(findByIdQuery);
-            PreparedStatement lastInsertId = connection.prepareStatement("select currval('m_users_id_seq') as last_insert_id;");
-
+            PreparedStatement lastInsertId = connection.prepareStatement("SELECT currval('m_users_id_seq') as last_insert_id;");
             statement.setString(1, user.getName());
             statement.setString(2, user.getSurname());
             statement.setDate(3, new Date(user.getBirthDate().getTime()));
@@ -70,9 +64,7 @@ public static final DatabasePropertiesReader reader = DatabasePropertiesReader.g
             statement.setTimestamp(5, user.getCreated());
             statement.setTimestamp(6, user.getChanged());
             statement.setFloat(7, user.getWeight());
-
             statement.executeUpdate();
-
             Long insertedId;
             ResultSet lastIdResultSet = lastInsertId.executeQuery();
             if (lastIdResultSet.next()) {
@@ -80,14 +72,12 @@ public static final DatabasePropertiesReader reader = DatabasePropertiesReader.g
             } else {
                 throw new RuntimeException("We cannot read sequence last value during User creation!");
             }
-
             return findById(insertedId);
         } catch (SQLException e) {
             System.err.println(e.getMessage());
             throw new RuntimeException("SQL Issues!");
         }
     }
-
     @Override
     public List<User> findAll() {
         final String findAllQuery = "select * from m_users order by id";
@@ -126,115 +116,95 @@ public static final DatabasePropertiesReader reader = DatabasePropertiesReader.g
         user.setWeight(rs.getFloat(WEIGHT));
         return user;
     }
-
-        @Override
-        public User findById(Long key) {
-
-            final String findByIdQuery = "select * from m_users where id = ?";
-
-            Connection connection;
-            PreparedStatement statement;
-            ResultSet rs;
-
-            try {
-                Class.forName(reader.getProperty(DATABASE_DRIVER_NAME));
-            } catch (ClassNotFoundException e) {
-                System.err.println("JDBC Driver Cannot be loaded!");
-                throw new RuntimeException("JDBC Driver Cannot be loaded!");
-            }
-
-            try {
-                connection = DriverManager.getConnection(reader.getProperty(DATABASE_URL), reader.getProperty(DATABASE_LOGIN), reader.getProperty(DATABASE_PASSWORD));
-                statement = connection.prepareStatement(findByIdQuery);
-                statement.setLong(1, key);
-
-                rs = statement.executeQuery();
-
-                if (rs.next()) {
-                    return parseResultSet(rs);
-                } else {
-                    throw new EntityNotFoundException("User with ID:" + key + "not found");
-                }
-            } catch (SQLException e) {
-                System.err.println(e.getMessage());
-                throw new RuntimeException("SQL Issues!");
-            }
-
+    @Override
+    public User findById(Long key) {
+        final String findByIdQuery = "select * from m_users where id = ?";
+        Connection connection;
+        PreparedStatement statement;
+        ResultSet rs;
+        try {
+            Class.forName(reader.getProperty(DATABASE_DRIVER_NAME));
+        } catch (ClassNotFoundException e) {
+            System.err.println("JDBC Driver Cannot be loaded!");
+            throw new RuntimeException("JDBC Driver Cannot be loaded!");
         }
-        @Override
-        public Optional<User> findOne(Long key) {
-            return Optional.of(findById(key));
+        try {
+            connection = DriverManager.getConnection(reader.getProperty(DATABASE_URL), reader.getProperty(DATABASE_LOGIN), reader.getProperty(DATABASE_PASSWORD));
+            statement = connection.prepareStatement(findByIdQuery);
+            statement.setLong(1, key);
+            rs = statement.executeQuery();
+            if (rs.next()) {
+                return parseResultSet(rs);
+            } else {
+                throw new EntityNotFoundException("User with ID:" + key + "not found");
+            }
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+            throw new RuntimeException("SQL Issues!");
         }
-        @Override
-        public User update(User user) {
-
-            final String findByIdQuery = "update m_users " +
-                    "set " +
-                    "name = ?,  " +
-                    "surname = ?,  " +
-                    "birth_date = ?,  " +
-                    "gender = ?,  " +
-                    "created = ?,  " +
-                    "changed = ?,  " +
-                    "weight = ?  " +
-                    "where id = ?";
-
-            Connection connection;
-            PreparedStatement statement;
-
-            try {
-                Class.forName(reader.getProperty(DATABASE_DRIVER_NAME));
-            } catch (ClassNotFoundException e) {
-                System.err.println("JDBC Driver Cannot be loaded!");
-                throw new RuntimeException("JDBC Driver Cannot be loaded!");
-            }
-
-            try {
-                connection = DriverManager.getConnection(reader.getProperty(DATABASE_URL), reader.getProperty(DATABASE_LOGIN), reader.getProperty(DATABASE_PASSWORD));
-                statement = connection.prepareStatement(findByIdQuery);
-                statement.setString(1, user.getName());
-                statement.setString(2, user.getSurname());
-                statement.setDate(3, new Date(user.getBirthDate().getTime()));
-                statement.setString(4, user.getGender().name());
-                statement.setTimestamp(5, user.getCreated());
-                statement.setTimestamp(6, user.getChanged());
-                statement.setFloat(7, user.getWeight());
-                statement.setLong(8, user.getId());
-
-                statement.executeUpdate();
-                return findById(user.getId());
-            } catch (SQLException e) {
-                System.err.println(e.getMessage());
-                throw new RuntimeException("SQL Issues!");
-            }
-
+    }
+    @Override
+    public Optional<User> findOne(Long key) {
+        return Optional.of(findById(key));
+    }
+    @Override
+    public User update(User user) {
+        final String findByIdQuery = "update m_users " +
+                "set " +
+                "name = ?,  " +
+                "surname = ?,  " +
+                "birth_date = ?,  " +
+                "gender = ?,  " +
+                "created = ?,  " +
+                "changed = ?,  " +
+                "weight = ?  " +
+                "where id = ?";
+        Connection connection;
+        PreparedStatement statement;
+        try {
+            Class.forName(reader.getProperty(DATABASE_DRIVER_NAME));
+        } catch (ClassNotFoundException e) {
+            System.err.println("JDBC Driver Cannot be loaded!");
+            throw new RuntimeException("JDBC Driver Cannot be loaded!");
         }
-        @Override
-        public Long delete(User user) {
-
-            final String findByIdQuery = "delete from m_users where id = ?";
-
-            Connection connection;
-            PreparedStatement statement;
-
-            try {
-                Class.forName(reader.getProperty(DATABASE_DRIVER_NAME));
-            } catch (ClassNotFoundException e) {
-                System.err.println("JDBC Driver Cannot be loaded!");
-                throw new RuntimeException("JDBC Driver Cannot be loaded!");
-            }
-
-            try {
-                connection = DriverManager.getConnection(reader.getProperty(DATABASE_URL), reader.getProperty(DATABASE_LOGIN), reader.getProperty(DATABASE_PASSWORD));
-                statement = connection.prepareStatement(findByIdQuery);
-                statement.setLong(1, user.getId());
-
-                int deletedRows = statement.executeUpdate();
-                return (long)deletedRows;
-            } catch (SQLException e) {
-                System.err.println(e.getMessage());
-                throw new RuntimeException("SQL Issues!");
-            }
-
+        try {
+            connection = DriverManager.getConnection(reader.getProperty(DATABASE_URL), reader.getProperty(DATABASE_LOGIN), reader.getProperty(DATABASE_PASSWORD));
+            statement = connection.prepareStatement(findByIdQuery);
+            statement.setString(1, user.getName());
+            statement.setString(2, user.getSurname());
+            statement.setDate(3, new Date(user.getBirthDate().getTime()));
+            statement.setString(4, user.getGender().name());
+            statement.setTimestamp(5, user.getCreated());
+            statement.setTimestamp(6, user.getChanged());
+            statement.setFloat(7, user.getWeight());
+            statement.setLong(8, user.getId());
+            statement.executeUpdate();
+            return findById(user.getId());
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+            throw new RuntimeException("SQL Issues!");
         }
+    }
+    @Override
+    public Long delete(User user) {
+        final String findByIdQuery = "delete from m_users where id = ?";
+        Connection connection;
+        PreparedStatement statement;
+        try {
+            Class.forName(reader.getProperty(DATABASE_DRIVER_NAME));
+        } catch (ClassNotFoundException e) {
+            System.err.println("JDBC Driver Cannot be loaded!");
+            throw new RuntimeException("JDBC Driver Cannot be loaded!");
+        }
+        try {
+            connection = DriverManager.getConnection(reader.getProperty(DATABASE_URL), reader.getProperty(DATABASE_LOGIN), reader.getProperty(DATABASE_PASSWORD));
+            statement = connection.prepareStatement(findByIdQuery);
+            statement.setLong(1, user.getId());
+            int deletedRows = statement.executeUpdate();
+            return (long)deletedRows;
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+            throw new RuntimeException("SQL Issues!");
+        }
+    }
 }

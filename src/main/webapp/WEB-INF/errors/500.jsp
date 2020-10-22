@@ -8,9 +8,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>500</title>
+    <title>Error page 500</title>
 </head>
 <body>
-<h>у вас все получилось</h>
+${trace}
 </body>
 </html>
