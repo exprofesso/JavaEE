@@ -4,6 +4,7 @@ import evilNerd.domain.Cars;
 import evilNerd.repository.CarsRepository;
 import evilNerd.util.DatabasePropertiesReader;
 import evilNerd.exception.EntityNotFoundException;
+import org.springframework.stereotype.Repository;
 
 
 import java.sql.Connection;
@@ -23,6 +24,8 @@ import static evilNerd.util.DatabasePropertiesReader.DATABASE_LOGIN;
 import static evilNerd.util.DatabasePropertiesReader.DATABASE_PASSWORD;
 import static evilNerd.util.DatabasePropertiesReader.DATABASE_URL;
 
+
+@Repository
 public class CarsRepositorylmpl implements CarsRepository {
 
     public static final DatabasePropertiesReader reader = DatabasePropertiesReader.getInstance();

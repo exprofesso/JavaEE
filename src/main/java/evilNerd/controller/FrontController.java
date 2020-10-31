@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 import com.google.gson.Gson;
 import org.apache.commons.io.IOUtils;
+import org.springframework.stereotype.Controller;
 
 // public static final CarsRepository carsRepository = new CarsRepositorylmpl();
 //   RequestDispatcher dispatcher = req.getRequestDispatcher("/tablecars");
@@ -28,7 +29,7 @@ import org.apache.commons.io.IOUtils;
 //    }
 
 
-
+@Controller
 public class FrontController extends HttpServlet {
 
     //public static final UserRepository userRepository = new UserRepositoryImpl();

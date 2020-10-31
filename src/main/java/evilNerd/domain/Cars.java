@@ -1,15 +1,11 @@
 package evilNerd.domain;
 
-import lombok.Setter;
-import lombok.Getter;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
+import lombok.*;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
-
-
+import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Controller;
 
 
 @Setter
@@ -17,6 +13,9 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 @EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
+@Data
+
 
 public class Cars {
 

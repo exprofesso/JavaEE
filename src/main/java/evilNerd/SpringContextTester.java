@@ -1,5 +1,6 @@
 package evilNerd;
 
+import evilNerd.domain.Cars;
 import evilNerd.domain.User;
 import evilNerd.util.DatabaseConfig;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -32,6 +33,10 @@ public class SpringContextTester {
         DatabaseConfig bean = annotationConfigApplicationContext.getBean(DatabaseConfig.class);
 
         System.out.println(bean);
+
+        Cars generatedCars = annotationConfigApplicationContext.getBean(Cars.class);
+        System.out.println(generatedCars);
+
 
     }
 
