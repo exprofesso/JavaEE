@@ -8,6 +8,8 @@ import lombok.AllArgsConstructor;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 import java.sql.Timestamp;
 import java.util.Date;
@@ -37,6 +39,24 @@ public class User {
     private Timestamp changed  = new Timestamp(System.currentTimeMillis());
 
     private Float weight;
+
+//    @Autowired
+//    @Qualifier("cars")
+    // через объект
+  private Cars userCars;
+
+//  @Autowired
+//  // через сеттер
+//  private void setUserCars (Cars userCars){
+//      this.userCars = userCars;
+//  }
+
+    @Autowired
+    // через конструктор
+    public User(Cars userCars){
+        this.userCars = userCars;
+    }
+
 
     public User(Long id, String name, String surname) {
         this.id = id;
