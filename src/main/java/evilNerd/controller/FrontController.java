@@ -29,7 +29,7 @@ import org.springframework.stereotype.Controller;
 //    }
 
 
-@Controller
+//@Controller
 public class FrontController extends HttpServlet {
 
     //public static final UserRepository userRepository = new UserRepositoryImpl();

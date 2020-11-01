@@ -25,7 +25,7 @@ import static evilNerd.util.DatabasePropertiesReader.DATABASE_PASSWORD;
 import static evilNerd.util.DatabasePropertiesReader.DATABASE_URL;
 
 
-@Repository
+//@Repository
 public class CarsRepositorylmpl implements CarsRepository {
 
     public static final DatabasePropertiesReader reader = DatabasePropertiesReader.getInstance();

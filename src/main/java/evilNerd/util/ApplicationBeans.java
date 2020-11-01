@@ -1,45 +1,36 @@
 package evilNerd.util;
 
-import evilNerd.domain.Cars;
-import evilNerd.domain.User;
+import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+
+import javax.sql.DataSource;
 
 @Configuration
 public class ApplicationBeans {
+
     @Bean
-    public Cars cars(){
-        return Cars.builder()
-                .id(1L)
-                .model("Opel")
-                .price(23000F)
-                .creationYear(2020)
-                .color("BLACK")
-                .userId(2L)
-                .build();
-    }
-    @Bean
-    @Primary
-    public Cars cars1(){
-        return Cars.builder()
-                .id(2L)
-                .model("Mersedes")
-                .price(123000F)
-                .creationYear(2019)
-                .color("RED")
-                .userId(4L)
-                .build();
+    public JdbcTemplate jdbcTemplate(DataSource dataSource){
+        return new JdbcTemplate();
     }
 
     @Bean
-    public User user1 (Cars cars){
-        return new User(cars);
+    public NamedParameterJdbcTemplate namedParameterJdbcTemplate (DataSource dataSource){
+        return  new NamedParameterJdbcTemplate(dataSource);
     }
+
 
     @Bean
-    public User user2 (Cars cars){
-        return new User(cars);
-    }
+    public DataSource hikariDatasourse(DatabaseConfig databaseConfig){
+        HikariDataSource hikariDataSource = new HikariDataSource();
+        hikariDataSource.setJdbcUrl(databaseConfig.getUrl());
+        hikariDataSource.setUsername(databaseConfig.getLogin());
+        hikariDataSource.setPassword(databaseConfig.getPassword());
+        hikariDataSource.setDriverClassName(databaseConfig.getDriveName());
+        hikariDataSource.setMaximumPoolSize(10);
 
+        return  hikariDataSource;
+    }
 }
