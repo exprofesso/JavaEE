@@ -58,11 +58,6 @@ public class User {
     }
 
 
-    public User(Long id, String name, String surname) {
-        this.id = id;
-        this.name = name;
-        this.surname = surname;
-    }
 
 
     @Override

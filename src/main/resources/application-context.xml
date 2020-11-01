@@ -10,17 +10,17 @@
 
     <!--    <import resource="datasource.xml"/>-->
 
-    <bean id="user1" class="evilNerd.domain.User">
-        <constructor-arg index="0" value="1212" type="java.lang.Long"/>
-        <constructor-arg index="1" value="Podkolzin"/>
-        <constructor-arg index="2" value="Sergey"/>
-    </bean>
+<!--    <bean id="user1" class="evilNerd.domain.User">-->
+<!--        <constructor-arg index="0" value="1212" type="java.lang.Long"/>-->
+<!--        <constructor-arg index="1" value="Podkolzin"/>-->
+<!--        <constructor-arg index="2" value="Sergey"/>-->
+<!--    </bean>-->
 
-    <bean id="user2" class="evilNerd.domain.User">
-        <constructor-arg index="0" value="2020" type="java.lang.Long"/>
-        <constructor-arg index="1" value="Rakovskaia"/>
-        <constructor-arg index="2" value="Katia"/>
+<!--    <bean id="user2" class="evilNerd.domain.User">-->
+<!--        <constructor-arg index="0" value="2020" type="java.lang.Long"/>-->
+<!--        <constructor-arg index="1" value="Rakovskaia"/>-->
+<!--        <constructor-arg index="2" value="Katia"/>-->
 
-    </bean>
+<!--    </bean>-->
 
 </beans>

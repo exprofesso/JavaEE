@@ -1,6 +1,7 @@
 package evilNerd.util;
 
 import evilNerd.domain.Cars;
+import evilNerd.domain.User;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -29,6 +30,16 @@ public class ApplicationBeans {
                 .color("RED")
                 .userId(4L)
                 .build();
+    }
+
+    @Bean
+    public User user1 (Cars cars){
+        return new User(cars);
+    }
+
+    @Bean
+    public User user2 (Cars cars){
+        return new User(cars);
     }
 
 }
