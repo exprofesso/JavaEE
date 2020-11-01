@@ -4,6 +4,8 @@ import evilNerd.domain.Cars;
 import evilNerd.domain.User;
 import evilNerd.repository.CarsRepository;
 import evilNerd.repository.UserRepository;
+import evilNerd.service.CarsService;
+import evilNerd.service.UserService;
 import evilNerd.util.DatabaseConfig;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -51,6 +53,16 @@ public class SpringContextTester {
 //
 //     System.out.println(carsRepository.findAll().stream().map(Cars::getModel).collect(Collectors.joining(", ")));
 
+        AnnotationConfigApplicationContext annotationConfigApplicationContext = new
+                AnnotationConfigApplicationContext("evilNerd");
+
+       UserService userService =  annotationConfigApplicationContext.getBean(UserService.class);
+
+        System.out.println(userService.findAll().stream().map(User::getName).collect(Collectors.joining(", ")));
+
+        CarsService carsService = annotationConfigApplicationContext.getBean(CarsService.class);
+
+        System.out.println(carsService.findAll().stream().map(Cars::getModel).collect(Collectors.joining(", ")));
 
     }
 
