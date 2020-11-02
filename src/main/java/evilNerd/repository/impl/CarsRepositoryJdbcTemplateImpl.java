@@ -6,6 +6,7 @@ import evilNerd.repository.CarsColumns;
 import evilNerd.repository.CarsRepository;
 import org.springframework.context.annotation.Primary;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -58,7 +59,13 @@ public class CarsRepositoryJdbcTemplateImpl implements CarsRepository {
 
     @Override
     public Cars findById(Long key) {
-        return null;
+//        MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
+//        mapSqlParameterSource.addValue("carsId", key);
+//
+//        return namedParameterJdbcTemplate.queryForObject("select * from m_cars where id = :carsId", mapSqlParameterSource, this::getUserRowMapper);
+
+        // второй вариант реализации
+        return jdbcTemplate.queryForObject("select * from m_cars where id = ?", new Object[]{key}, this::getUserRowMapper);
     }
 
     @Override

@@ -18,11 +18,16 @@ public class SpringContextTester {
 
         System.out.println(userService.findAll().stream().map(User::getName).collect(Collectors.joining(", ")));
 
+        System.out.println(userService.findById(5L));
+
         System.out.println("*******************");
 
                 CarsService carsService = annotationConfigApplicationContext.getBean(CarsService.class);
 
         System.out.println(carsService.findAll().stream().map(Cars::getModel).collect(Collectors.joining(", ")));
+
+        System.out.println(carsService.findById(4L));
+
 
 
 

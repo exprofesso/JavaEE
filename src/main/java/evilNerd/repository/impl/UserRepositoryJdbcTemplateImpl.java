@@ -6,6 +6,7 @@ import evilNerd.repository.UserColumns;
 import evilNerd.repository.UserRepository;
 import org.springframework.context.annotation.Primary;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -57,7 +58,15 @@ public class UserRepositoryJdbcTemplateImpl implements UserRepository {
 
     @Override
     public User findById(Long key) {
-        return null;
+
+//        MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
+//        mapSqlParameterSource.addValue("userId", key);
+//
+//        return namedParameterJdbcTemplate.queryForObject("select * from m_users where id = :userId", mapSqlParameterSource, this::getUserRowMapper);
+        //второй вариат реализации
+        return jdbcTemplate.queryForObject("select * from m_users where id = ?", new Object[]{key}, this::getUserRowMapper);
+
+
     }
 
     @Override
