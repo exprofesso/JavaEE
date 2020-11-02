@@ -3,6 +3,7 @@ package evilNerd.repository.impl;
 
 import evilNerd.domain.Gender;
 import evilNerd.domain.User;
+import evilNerd.repository.UserColumns;
 import evilNerd.repository.UserRepository;
 import evilNerd.util.DatabasePropertiesReader;
 import evilNerd.exception.EntityNotFoundException;
@@ -29,14 +30,7 @@ import static evilNerd.util.DatabasePropertiesReader.DATABASE_URL;
 public class UserRepositoryImpl implements UserRepository {
 
     public static final DatabasePropertiesReader reader = DatabasePropertiesReader.getInstance();
-    private static final String ID = "id";
-    private static final String NAME = "name";
-    private static final String SURNAME = "surname";
-    private static final String BIRTH_DATE = "birth_date";
-    private static final String GENDER = "gender";
-    private static final String CREATED = "created";
-    private static final String CHANGED = "changed";
-    private static final String WEIGHT = "weight";
+
     @Override
     public List<User> search(String query) {
         return null;
@@ -106,14 +100,14 @@ public class UserRepositoryImpl implements UserRepository {
     }
     private User parseResultSet(ResultSet rs) throws SQLException {
         User user = new User();
-        user.setId(rs.getLong(ID));
-        user.setName(rs.getString(NAME));
-        user.setSurname(rs.getString(SURNAME));
-        user.setBirthDate(rs.getDate(BIRTH_DATE));
-        user.setGender(Gender.valueOf(rs.getString(GENDER)));
-        user.setCreated(rs.getTimestamp(CREATED));
-        user.setChanged(rs.getTimestamp(CHANGED));
-        user.setWeight(rs.getFloat(WEIGHT));
+        user.setId(rs.getLong(UserColumns.ID));
+        user.setName(rs.getString(UserColumns.NAME));
+        user.setSurname(rs.getString(UserColumns.SURNAME));
+        user.setBirthDate(rs.getDate(UserColumns.BIRTH_DATE));
+        user.setGender(Gender.valueOf(rs.getString(UserColumns.GENDER)));
+        user.setCreated(rs.getTimestamp(UserColumns.CREATED));
+        user.setChanged(rs.getTimestamp(UserColumns.CHANGED));
+        user.setWeight(rs.getFloat(UserColumns.WEIGHT));
         return user;
     }
     @Override

@@ -1,6 +1,7 @@
 package evilNerd.repository.impl;
 
 import evilNerd.domain.Cars;
+import evilNerd.repository.CarsColumns;
 import evilNerd.repository.CarsRepository;
 import evilNerd.util.DatabasePropertiesReader;
 import evilNerd.exception.EntityNotFoundException;
@@ -25,18 +26,10 @@ import static evilNerd.util.DatabasePropertiesReader.DATABASE_PASSWORD;
 import static evilNerd.util.DatabasePropertiesReader.DATABASE_URL;
 
 
-//@Repository
+@Repository
 public class CarsRepositorylmpl implements CarsRepository {
 
     public static final DatabasePropertiesReader reader = DatabasePropertiesReader.getInstance();
-
-    public static final String ID = "id";
-    public static final String MODEL = "model";
-    public static final String CREATION_YEAR = "creation_year";
-    public static final String USER_ID = "user_id";
-    public static final String PRICE = "price";
-    public static final String COLOR = "color";
-
 
     @Override
     public List<Cars> search(String query) {
@@ -113,12 +106,12 @@ public class CarsRepositorylmpl implements CarsRepository {
     private Cars parseResultSet (ResultSet rs) throws SQLException {
 
         Cars cars = new Cars();
-        cars.setId(rs.getLong(ID));
-        cars.setModel(rs.getString(MODEL));
-        cars.setCreationYear(rs.getInt(CREATION_YEAR));
-        cars.setUserId(rs.getLong(USER_ID));
-        cars.setPrice(rs.getFloat(PRICE));
-        cars.setColor(rs.getString(COLOR));
+        cars.setId(rs.getLong(CarsColumns.ID));
+        cars.setModel(rs.getString(CarsColumns.MODEL));
+        cars.setCreationYear(rs.getInt(CarsColumns.CREATION_YEAR));
+        cars.setUserId(rs.getLong(CarsColumns.USER_ID));
+        cars.setPrice(rs.getFloat(CarsColumns.PRICE));
+        cars.setColor(rs.getString(CarsColumns.COLOR));
         return cars;
 
     }

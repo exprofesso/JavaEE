@@ -12,25 +12,25 @@ import javax.sql.DataSource;
 public class ApplicationBeans {
 
     @Bean
-    public JdbcTemplate jdbcTemplate(DataSource dataSource){
-        return new JdbcTemplate();
+    public JdbcTemplate jdbcTemplate(DataSource dataSource) {
+        return new JdbcTemplate(dataSource);
     }
 
     @Bean
-    public NamedParameterJdbcTemplate namedParameterJdbcTemplate (DataSource dataSource){
-        return  new NamedParameterJdbcTemplate(dataSource);
+    public NamedParameterJdbcTemplate namedParameterJdbcTemplate(DataSource dataSource) {
+        return new NamedParameterJdbcTemplate(dataSource);
     }
 
-
     @Bean
-    public DataSource hikariDatasourse(DatabaseConfig databaseConfig){
+    public DataSource hikariDatasource(DatabaseConfig databaseConfig) {
         HikariDataSource hikariDataSource = new HikariDataSource();
+
         hikariDataSource.setJdbcUrl(databaseConfig.getUrl());
         hikariDataSource.setUsername(databaseConfig.getLogin());
         hikariDataSource.setPassword(databaseConfig.getPassword());
-        hikariDataSource.setDriverClassName(databaseConfig.getDriveName());
+        hikariDataSource.setDriverClassName(databaseConfig.getDriverName());
         hikariDataSource.setMaximumPoolSize(10);
 
-        return  hikariDataSource;
+        return hikariDataSource;
     }
 }
