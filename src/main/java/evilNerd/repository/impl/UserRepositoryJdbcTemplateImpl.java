@@ -30,7 +30,9 @@ public class UserRepositoryJdbcTemplateImpl implements UserRepository {
 
     @Override
     public List<User> search(String query) {
-        return null;
+        return jdbcTemplate.query("select * from m_users where name like ?", new Object[]{query}, this::getUserRowMapper);
+
+        // '\%:query\%'"
     }
 
     @Override

@@ -12,5 +12,7 @@ public interface CarsService {
 
     Cars findById(Long id);
 
+    List<Cars> search (String query);
+
 
 }

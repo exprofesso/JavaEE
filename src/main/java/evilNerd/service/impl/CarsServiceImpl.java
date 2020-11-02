@@ -29,4 +29,9 @@ public class CarsServiceImpl implements CarsService {
     public Cars findById(Long id) {
         return carsRepository.findById(id);
     }
+
+    @Override
+    public List<Cars> search(String query) {
+        return carsRepository.search(query);
+    }
 }

@@ -38,4 +38,12 @@ public class UserServiceImpl implements UserService {
     public User findById(Long userId) {
         return userRepository.findById(userId);
     }
+
+    public List<User> search (String query){
+      return  userRepository.search(query);
+    };
+
+
+
+
 }
