@@ -2,12 +2,15 @@ package evilNerd;
 
 
 import evilNerd.domain.Cars;
+import evilNerd.domain.Gender;
 import evilNerd.domain.User;
 import evilNerd.service.CarsService;
 import evilNerd.service.UserService;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.stream.Collectors;
 
 public class SpringContextTester {
@@ -22,6 +25,19 @@ public class SpringContextTester {
 
         System.out.println(userService.search("DIMA"));
 
+        User userForSave =
+                User.builder()
+                .name("VADIM")
+                .surname("Podkolzin")
+                        .birthDate(new Date())
+                        .gender(Gender.MALE)
+                        .created(new Timestamp(new Date().getTime()))
+                        .changed(new Timestamp(new Date().getTime()))
+                        .weight(95F)
+                .build();
+
+        System.out.println(userService.save(userForSave));
+
         System.out.println("*******************");
 
                 CarsService carsService = annotationConfigApplicationContext.getBean(CarsService.class);
@@ -31,6 +47,17 @@ public class SpringContextTester {
         System.out.println(carsService.findById(4L));
 
         System.out.println(carsService.search("VW"));
+
+        Cars carsForSave =
+                Cars.builder()
+                .model("BELAZ")
+                .creationYear(2000)
+                .price(299430F)
+                .userId(5L)
+                .color("BLACK")
+                .build();
+
+        System.out.println();
 
 
 
