@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -33,5 +34,20 @@ public class CarsServiceImpl implements CarsService {
     @Override
     public List<Cars> search(String query) {
         return carsRepository.search(query);
+    }
+
+    @Override
+    public Optional<Cars> findOne(Long key) {
+        return Optional.empty();
+    }
+
+    @Override
+    public Cars update(Cars user) {
+        return null;
+    }
+
+    @Override
+    public int delete(Cars user) {
+        return 0;
     }
 }

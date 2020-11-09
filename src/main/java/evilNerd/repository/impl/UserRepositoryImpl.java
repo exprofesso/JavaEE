@@ -141,6 +141,8 @@ public class UserRepositoryImpl implements UserRepository {
     public Optional<User> findOne(Long key) {
         return Optional.of(findById(key));
     }
+
+
     @Override
     public User update(User user) {
         final String findByIdQuery = "update m_users " +

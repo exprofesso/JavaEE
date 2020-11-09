@@ -12,6 +12,7 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
+import java.security.KeyStore;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Collections;
@@ -98,11 +99,29 @@ public class UserRepositoryJdbcTemplateImpl implements UserRepository {
 
     @Override
     public User update(User object) {
+        final String updateQuery = "update m_users set name = ?, + " +
+                "surname = ?, birth_date = ?, gender = ?, created = ?, " +
+                "changed = ?, weight = ?" +
+                "where id = ?";
+
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+
+        //        return jdbcTemplate.queryForObject("update m_users " +
+//                "set " +
+//                "name = ?,  " +
+//                "surname = ?,  " +
+//                "birth_date = ?,  " +
+//                "gender = ?,  " +
+//                "created = ?,  " +
+//                "changed = ?,  " +
+//                "weight = ?  " +
+//                "where id = ?", new Object[]{key}, this::getUserRowMapper);
+
         return null;
     }
 
     @Override
-    public Long delete(User object) {
-        return null;
+    public Long delete(User user) {
+        return 0L;
     }
 }
