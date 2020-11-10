@@ -4,6 +4,8 @@ import evilNerd.domain.Gender;
 import evilNerd.domain.User;
 import evilNerd.repository.UserColumns;
 import evilNerd.repository.UserRepository;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Primary;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -20,9 +22,14 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
+//@Slf4j
 @Repository
 @Primary
+
 public class UserRepositoryJdbcTemplateImpl implements UserRepository {
+
+    private static final Logger log = Logger.getLogger(UserRepositoryJdbcTemplateImpl.class);
+
 
     private JdbcTemplate jdbcTemplate;
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;

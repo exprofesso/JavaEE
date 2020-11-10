@@ -1,10 +1,9 @@
 package evilNerd.aspect;
 
 import org.apache.log4j.Logger;
+import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.Around;
-import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Pointcut;
+import org.aspectj.lang.annotation.*;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StopWatch;
 
@@ -16,16 +15,28 @@ public class LoggingAspect {
 
     //   private Map<Integer, String> countMap = new HashMap<>();
 
-    @Pointcut("execution(* evilNerd.repository.impl.UserRepositoryJdbcTemplateImpl.*(..))")
-    public void aroundRepositoryPointcut(){
+//        @Before("aroundRepositoryPointcut()")
+//    public void logBefore(JoinPoint joinPoint) {
+//        log.info("Method " + joinPoint.getSignature().getName() + " start from before advice");
+//    }
+//
+//    @AfterReturning(pointcut = "aroundRepositoryPointcut()")
+//    public void doAccessCheck(JoinPoint joinPoint) {
+//        log.info("Method " + joinPoint.getSignature().getName() + " finished from AfterReturning");
+//    }
 
+
+    // @Pointcut("execution(* evilNerd.repository.impl.*..Impl*.*(..))")
+    //  @Pointcut("execution(* evilNerd.repository.impl.UserRepositoryJdbcTemplateImpl.*(..))")
+     @Pointcut("execution(* evilNerd.repository.impl.CarsRepositoryJdbcTemplateImpl.*(..))")
+    public void aroundRepositoryPointcut(){
     }
     @Around("aroundRepositoryPointcut()")
     public Object logAroundMethods(ProceedingJoinPoint joinPoint) throws Throwable {
         int count = 0;
         StopWatch stopWatch = new StopWatch();
         stopWatch.start();
-        log.info("Method" + joinPoint.getSignature().getName() + "start");
+        log.info("Method " + joinPoint.getSignature().getName() + " start");
 
         Object proceed = joinPoint.proceed();
 

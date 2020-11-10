@@ -4,6 +4,8 @@ import evilNerd.domain.Cars;
 import evilNerd.domain.User;
 import evilNerd.repository.CarsColumns;
 import evilNerd.repository.CarsRepository;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Primary;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -19,9 +21,12 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
+//@Slf4j
 @Repository
 @Primary
 public class CarsRepositoryJdbcTemplateImpl implements CarsRepository {
+
+    private static final Logger log = Logger.getLogger(CarsRepositoryJdbcTemplateImpl.class);
 
     private JdbcTemplate jdbcTemplate;
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;

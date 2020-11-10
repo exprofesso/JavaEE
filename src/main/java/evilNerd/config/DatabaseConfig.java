@@ -1,4 +1,4 @@
-package evilNerd.util;
+package evilNerd.config;
 
 
 import lombok.AllArgsConstructor;

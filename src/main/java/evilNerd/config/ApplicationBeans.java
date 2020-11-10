@@ -1,4 +1,4 @@
-package evilNerd.util;
+package evilNerd.config;
 
 import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.context.annotation.Bean;
