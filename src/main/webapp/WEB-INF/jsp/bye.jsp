@@ -4,6 +4,6 @@
     <title>Bye</title>
 </head>
 <body>
-Bye-bye!
+${someMessage}
 </body>
 </html>
