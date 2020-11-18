@@ -4,7 +4,7 @@ package evilNerd.controller.request;
 import lombok.Data;
 
 @Data
-public class CarsReatRequest {
+public class CarsCreateRequest {
 
     private Long id;
 

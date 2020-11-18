@@ -1,6 +1,9 @@
 package evilNerd.controller;
 
+import evilNerd.controller.request.CarsCreateRequest;
 import evilNerd.controller.request.SearchCriteria;
+
+import evilNerd.domain.Cars;
 import evilNerd.service.CarsService;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
@@ -55,7 +58,8 @@ public class CarsController {
     }
 
   */
-    //cars/search
+
+
     @GetMapping(value = "search")
     // public ModelAndView search(@RequestParam("query") String queryParam, @RequestParam("limit") Long limit){
     public ModelAndView search(@ModelAttribute SearchCriteria criteria){
@@ -67,10 +71,6 @@ public class CarsController {
 
     }
 
-
-
-
-
     //cars/1
     @GetMapping(value = "/{id}")
     // public ModelAndView search(@RequestParam("query") String queryParam, @RequestParam("limit") Long limit){
@@ -79,6 +79,35 @@ public class CarsController {
         ModelAndView result = new ModelAndView();
         result.setViewName(CARS_PAGE);
         result.addObject(CARS_LIST_ATTRIBUTE, Collections.singletonList(carsService.findById(carsId)));
+        return result;
+
+    }
+
+    //cars/create
+    @GetMapping("/create")
+    public ModelAndView getCarsCreateRequest(){
+        ModelAndView result = new ModelAndView();
+        result.setViewName("createcars");
+        result.addObject("carsCreateRequest", new CarsCreateRequest());
+        return result;
+    }
+
+    @PostMapping
+    public ModelAndView createCars(@ModelAttribute CarsCreateRequest carsCreateRequest){
+
+        Cars cars = new Cars();
+        cars.setModel(carsCreateRequest.getModel());
+        cars.setCreationYear(carsCreateRequest.getCreationYear());
+        cars.setUserId(carsCreateRequest.getUserId());
+        cars.setPrice(carsCreateRequest.getPrice());
+        cars.setColor(carsCreateRequest.getColor());
+
+        carsService.save(cars);
+
+        ModelAndView result = new ModelAndView();
+        result.setViewName(CARS_PAGE);
+        result.addObject(CARS_LIST_ATTRIBUTE, carsService.findAll());
+
         return result;
 
     }

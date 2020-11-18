@@ -27,6 +27,16 @@ public class UserController {
     public static final String USER_PAGE = "users";
     public static final String USER_LIST_ATTRIBUTE = "users";
 
+
+    @InitBinder
+    public void initBinder(WebDataBinder binder) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        sdf.setLenient(true);
+        binder.registerCustomEditor(Date.class, new CustomDateEditor(sdf, true));
+    }
+
+
+
     //users/
     @GetMapping
     public ModelAndView getHelloPage() {
@@ -35,28 +45,12 @@ public class UserController {
         result.addObject(USER_LIST_ATTRIBUTE, userService.findAll());
         return result;
     }
-    @InitBinder
-    public void initBinder(WebDataBinder binder) {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        sdf.setLenient(true);
-        binder.registerCustomEditor(Date.class, new CustomDateEditor(sdf, true));
-    }
-
-    @GetMapping("/create")
-    public ModelAndView getUserCreateRequest(){
-        ModelAndView result = new ModelAndView();
-        result.setViewName("createuser");
-        result.addObject("userCreateRequest", new UserCreateRequest());
-        return result;
-    }
-
     //users/search
 
     // Query params handling
     // 1)RequestParam
     // 2)ModelAttribute
     // 3)ModelMap and get query param by key from map
-
 
 /*    @GetMapping(value = "search")
    // public ModelAndView usersearch(@RequestParam("query") String queryParam, @RequestParam("limit") Long limit) {
@@ -76,7 +70,6 @@ public class UserController {
     }
  */
 
-    //users/search
     @GetMapping(value = "search")
     // public ModelAndView usersearch(@RequestParam("query") String queryParam, @RequestParam("limit") Long limit) {
     public ModelAndView usersearch(@ModelAttribute SearchCriteria criteria) {
@@ -97,6 +90,13 @@ public class UserController {
         ModelAndView result = new ModelAndView();
         result.setViewName(USER_PAGE);
         result.addObject(USER_LIST_ATTRIBUTE, Collections.singletonList(userService.findById(userId)));
+        return result;
+    }
+    @GetMapping("/create")
+    public ModelAndView getUserCreateRequest(){
+        ModelAndView result = new ModelAndView();
+        result.setViewName("createuser");
+        result.addObject("userCreateRequest", new UserCreateRequest());
         return result;
     }
 
