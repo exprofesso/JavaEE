@@ -10,9 +10,9 @@
         <welcome-file>index.htm</welcome-file>
     </welcome-file-list>
 
-    <listener>
-        <listener-class>evilNerd.listener.CustomContextListener</listener-class>
-    </listener>
+<!--    <listener>-->
+<!--       <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>-->
+<!--    </listener>-->
 
     <servlet>
         <servlet-name>MainServlet</servlet-name>

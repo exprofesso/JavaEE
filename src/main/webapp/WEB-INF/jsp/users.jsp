@@ -39,8 +39,5 @@
         </c:forEach>
     </table>
 </div>
-<div>
-    ${singleUser}
-</div>
 </body>
 </html>

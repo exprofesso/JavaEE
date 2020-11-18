@@ -3,7 +3,9 @@ package evilNerd.controller;
 import evilNerd.controller.request.SearchCriteria;
 import evilNerd.service.CarsService;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -31,8 +33,31 @@ public class CarsController {
 
     }
     //cars/search
-    @GetMapping(value = "search")
+
+    // Query params handling
+    // 1)RequestParam
+    // 2)ModelAttribute
+    // 3)ModelMap and get query param by key from map
+
+ /*   @GetMapping(value = "search")
    // public ModelAndView search(@RequestParam("query") String queryParam, @RequestParam("limit") Long limit){
+    public ModelAndView search(ModelMap modelMap){
+
+        ModelAndView result = new ModelAndView();
+
+        String resultQuery = StringUtils.isNotBlank((String)modelMap.get("query")) ?
+                (String)modelMap.get("query") : "Sergey Auto";
+        Long resultLimit = (Long)modelMap.get("limit") != null ? (Long)modelMap.get("limit") : 100;
+
+        result.setViewName(CARS_PAGE);
+        result.addObject(CARS_LIST_ATTRIBUTE, carsService.search(resultQuery).stream().limit(resultLimit).collect(Collectors.toList()));
+        return result;
+    }
+
+  */
+    //cars/search
+    @GetMapping(value = "search")
+    // public ModelAndView search(@RequestParam("query") String queryParam, @RequestParam("limit") Long limit){
     public ModelAndView search(@ModelAttribute SearchCriteria criteria){
 
         ModelAndView result = new ModelAndView();
@@ -41,6 +66,10 @@ public class CarsController {
         return result;
 
     }
+
+
+
+
 
     //cars/1
     @GetMapping(value = "/{id}")

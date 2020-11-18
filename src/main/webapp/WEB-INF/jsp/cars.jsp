@@ -42,8 +42,6 @@
         </c:forEach>
     </table>
 </div>
-<div>
-    ${singleCars}
-</div>
+
 </body>
 </html>
