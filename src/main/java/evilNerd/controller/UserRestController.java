@@ -31,8 +31,9 @@ public class UserRestController {
 
     @GetMapping
     public ResponseEntity<List<User>> findAllUsers() {
-        //return ResponseEntity.ok(userService.findAll());
-        return new ResponseEntity<>(userService.findAll(), HttpStatus.OK);
+      //  throw new RuntimeException("Test Controller advice"); // обработка ошибки
+        //return ResponseEntity.ok(userService.findAll()); // краткая реализация
+        return new ResponseEntity<>(userService.findAll(), HttpStatus.OK); // полная реализация
     }
 
     @GetMapping("/{id}")
