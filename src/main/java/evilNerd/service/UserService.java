@@ -11,13 +11,13 @@ public interface UserService {
 
     User save(User user);
 
+    User update(User user);
+
     User findById(Long userId);
 
     List<User> search (String query);
 
     Optional<User> findOne(Long key);
-
-    User update (User user);
 
     int delete (User user);
 

@@ -1,6 +1,7 @@
 package evilNerd.controller;
 
 import evilNerd.controller.request.SearchCriteria;
+import evilNerd.controller.request.UserChangeRequest;
 import evilNerd.controller.request.UserCreateRequest;
 import evilNerd.domain.User;
 import evilNerd.service.UserService;
@@ -76,7 +77,23 @@ public class UserRestController {
         user.setBirthDate(userCreateRequest.getBirthDate());
         user.setChanged(new Timestamp(System.currentTimeMillis()));
         user.setWeight(userCreateRequest.getWeight());
-        return userService.save(user);
+        return userService.update(user);
+    }
+
+    @PutMapping()
+    @ResponseStatus(HttpStatus.OK)
+    public User updateUser(@RequestBody UserChangeRequest userChangeRequest) {
+
+        User user = userService.findById(userChangeRequest.getId());
+
+        //converters
+        user.setGender(userChangeRequest.getGender());
+        user.setName(userChangeRequest.getName());
+        user.setSurname(userChangeRequest.getSurname());
+        user.setBirthDate(userChangeRequest.getBirthDate());
+        user.setChanged(new Timestamp(System.currentTimeMillis()));
+        user.setWeight(userChangeRequest.getWeight());
+        return userService.update(user);
     }
 
 
