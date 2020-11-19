@@ -25,9 +25,9 @@ public class User {
 
     private Gender gender = Gender.NOT_SELECTED;
 
-    private Timestamp created = new Timestamp(System.currentTimeMillis());
+    private Timestamp created;
 
-    private Timestamp changed = new Timestamp(System.currentTimeMillis());
+    private Timestamp changed;
 
     private Float weight;
 
