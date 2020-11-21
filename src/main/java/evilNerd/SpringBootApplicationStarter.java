@@ -14,7 +14,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 @SpringBootApplication(scanBasePackages =  "evilNerd")
 @EnableWebMvc
 @EnableAspectJAutoProxy(proxyTargetClass = true)
-@Import({AmazonConfig.class,  ApplicationBeans.class, WebBeansConfig.class})
+@Import({AmazonConfig.class, ApplicationBeans.class, WebBeansConfig.class})
 public class SpringBootApplicationStarter {
 
     public static void main(String[] args) {
