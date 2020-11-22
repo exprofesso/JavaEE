@@ -20,6 +20,9 @@ amazon:
 
 google:
   video:
-    in6: ROCK SOUND
-    password: 123456789
-    city: Grodno
+    comedy:
+     in6: ROCK SOUND
+     password: 123456789
+     city: Grodno
+     since: 1162
+     peole: 375000

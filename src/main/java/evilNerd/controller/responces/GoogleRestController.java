@@ -1,7 +1,7 @@
-package evilNerd.controller;
+package evilNerd.controller.responces;
 
 
-import evilNerd.config.AmazonConfig;
+import evilNerd.config.GoogleConfig;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,15 +11,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("rest/info/amazon")
+@RequestMapping("rest/info/google")
 @RequiredArgsConstructor
-public class AmazonRestController {
+public class GoogleRestController {
 
     @Autowired
-    public final AmazonConfig amazonConfig;
+    public final GoogleConfig googleConfig;
 
     @GetMapping
-   public ResponseEntity<AmazonConfig> amazonInfo(){
-        return new ResponseEntity<>(amazonConfig, HttpStatus.OK);
+    public ResponseEntity<GoogleConfig> googleInfo(){
+        return new ResponseEntity<>(googleConfig, HttpStatus.OK);
     }
 }
